@@ -7,15 +7,8 @@ function calculateDate() {
         return;
     }
 
-    // 1. รับค่าวันที่
+    // คำนวณวันที่ต้องจอง (ลบ 90 วัน)
     let travelDate = new Date(input);
-    
-    // 🌟 ดักจับปัญหา iOS พิมพ์ปี พ.ศ. (BE) ถ้าปีมากกว่า 2500 ให้ลบ 543 ออกเพื่อแปลงเป็น ค.ศ.
-    if (travelDate.getFullYear() > 2500) {
-        travelDate.setFullYear(travelDate.getFullYear() - 543);
-    }
-
-    // 2. คำนวณวันที่ต้องจอง (ลบ 90 วัน)
     let bookingDate = new Date(travelDate);
     bookingDate.setDate(bookingDate.getDate() - 90); 
     
@@ -23,18 +16,19 @@ function calculateDate() {
     let month = (bookingDate.getMonth() + 1).toString().padStart(2, '0');
     let year = bookingDate.getFullYear();
 
-    // 3. แปลงวันที่สำหรับ Google Calendar (รูปแบบ YYYYMMDDTHHmm00)
+    // แปลงวันที่สำหรับ Google Calendar (รูปแบบ YYYYMMDDTHHmm00)
+    // ตั้งเวลา 08:15 น. ถึง 08:30 น.
     let startDateStr = year + month + day + "T081500";
     let endDateStr = year + month + day + "T083000";
 
-    // 4. ข้อมูลที่จะใส่ในปฏิทิน
-    let eventTitle = encodeURIComponent("✈️ เตรียมจองตั๋วเดินทางวันที่ " + day + "/" + month + "/" + year);
+    // ข้อมูลที่จะใส่ในปฏิทิน
+    let eventTitle = encodeURIComponent("✈️ เตรียมจองตั๋วเดินทางวันที่ " + input);
     let eventDetails = encodeURIComponent("ได้เวลาเข้าไปจองตั๋วแล้ว! รีบเตรียมตัวเข้าเว็บ ระบบจะเปิดให้จองเวลา 08:30 น.");
     
-    // 5. สร้างลิงก์ Google Calendar (พ่วงคำสั่งเปิด Browser นอก)
-    let calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${startDateStr}/${endDateStr}&details=${eventDetails}&openExternalBrowser=1`;
+    // สร้างลิงก์ Google Calendar
+    let calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${startDateStr}/${endDateStr}&details=${eventDetails}`;
 
-    // 6. แสดงผลบนหน้าเว็บ
+    // แสดงผลบนหน้าเว็บ
     let message = `<span style='color: #d9534f; font-size: 1.2em; font-weight: bold;'>
                      🎉 วันที่ต้องกดจองตั๋ว: ${day}/${month}/${year} เวลา 08:30 น.
                    </span><br><br>`;
