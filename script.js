@@ -26,7 +26,8 @@ function calculateDate() {
     let eventDetails = encodeURIComponent("ได้เวลาเข้าไปจองตั๋วแล้ว! รีบเตรียมตัวเข้าเว็บ ระบบจะเปิดให้จองเวลา 08:30 น.");
     
     // สร้างลิงก์ Google Calendar
-    let calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${startDateStr}/${endDateStr}&details=${eventDetails}`;
+    let calLink = // 4. สร้างลิงก์ Google Calendar (เพิ่มคำสั่งบังคับเปิดเบราว์เซอร์นอก)
+    let calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${startDateStr}/${endDateStr}&details=${eventDetails}&openExternalBrowser=1`;;
 
     // แสดงผลบนหน้าเว็บ
     let message = `<span style='color: #d9534f; font-size: 1.2em; font-weight: bold;'>
